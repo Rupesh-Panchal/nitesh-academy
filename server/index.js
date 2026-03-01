@@ -8,31 +8,24 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-
-// =====================================
-// TEST ROUTE
-// =====================================
 app.get("/", (req, res) => {
   res.send("Server running 🚀");
 });
 
+const bcrypt = require("bcrypt");
 
-// =====================================
-// SIGNUP ROUTE
-// =====================================
 app.post("/signup", (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { firstName, lastName, email, phone, password } = req.body;
 
-  if (!name || !email || !password || !role) {
+  if (!firstName || !lastName || !email || !phone || !password) {
     return res.status(400).json({
       message: "All fields are required",
     });
   }
 
-  const checkUserQuery =
-    "SELECT * FROM users WHERE email = ?";
+  const checkUserQuery = "SELECT * FROM users WHERE email = ?";
 
-  db.query(checkUserQuery, [email], (err, result) => {
+  db.query(checkUserQuery, [email], async (err, result) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -46,12 +39,18 @@ app.post("/signup", (req, res) => {
       });
     }
 
-    const insertQuery =
-      "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
+    // HASH PASSWORD
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const insertQuery = `
+      INSERT INTO users 
+      (first_name, last_name, email, phone, password, role) 
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
 
     db.query(
       insertQuery,
-      [name, email, password, role],
+      [firstName, lastName, email, phone, hashedPassword, "student"],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -63,15 +62,11 @@ app.post("/signup", (req, res) => {
         res.json({
           message: "Signup Successful ✅",
         });
-      }
+      },
     );
   });
 });
 
-
-// =====================================
-// LOGIN ROUTE (ROLE BASED)
-// =====================================
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -81,8 +76,7 @@ app.post("/login", (req, res) => {
     });
   }
 
-  const loginQuery =
-    "SELECT * FROM users WHERE email = ? AND password = ?";
+  const loginQuery = "SELECT * FROM users WHERE email = ? AND password = ?";
 
   db.query(loginQuery, [email, password], (err, result) => {
     if (err) {
@@ -111,7 +105,6 @@ app.post("/login", (req, res) => {
     });
   });
 });
-
 
 // =====================================
 app.listen(PORT, () => {

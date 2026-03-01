@@ -1,281 +1,152 @@
-// // import { useState } from "react";
-// // import { Link, useNavigate } from "react-router-dom";
-// // import "../styles/Auth.css";
-
-// // const Signup = () => {
-// //   const navigate = useNavigate();
-
-// //   const [form, setForm] = useState({
-// //     name: "",
-// //     email: "",
-// //     password: "",
-// //     role: "student",
-// //   });
-
-// //   const handleSubmit = (e) => {
-// //     e.preventDefault();
-// //     navigate("/");
-// //   };
-
-// //   return (
-// //     <div className="auth-wrapper">
-// //       <div className="auth-box">
-
-// //         <div className="auth-content">
-// //           <h2>Create Account 🚀</h2>
-// //           <p>Join Nitesh Academy</p>
-
-// //           <form onSubmit={handleSubmit}>
-// //             <div className="form-group">
-// //               <input
-// //                 type="text"
-// //                 placeholder="Full Name"
-// //                 onChange={(e) =>
-// //                   setForm({ ...form, name: e.target.value })
-// //                 }
-// //               />
-// //             </div>
-
-// //             <div className="form-group">
-// //               <input
-// //                 type="email"
-// //                 placeholder="Email Address"
-// //                 onChange={(e) =>
-// //                   setForm({ ...form, email: e.target.value })
-// //                 }
-// //               />
-// //             </div>
-
-// //             <div className="form-group">
-// //               <input
-// //                 type="password"
-// //                 placeholder="Password"
-// //                 onChange={(e) =>
-// //                   setForm({ ...form, password: e.target.value })
-// //                 }
-// //               />
-// //             </div>
-
-// //             <div className="form-group">
-// //               <select
-// //                 onChange={(e) =>
-// //                   setForm({ ...form, role: e.target.value })
-// //                 }
-// //               >
-// //                 <option value="student">Student</option>
-// //                 <option value="admin">Admin</option>
-// //               </select>
-// //             </div>
-
-// //             <button className="primary-btn">Signup</button>
-// //           </form>
-
-// //           <div className="bottom-text">
-// //             Already have an account? <Link to="/">Login</Link>
-// //           </div>
-// //         </div>
-
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default Signup;
-
-
-
-// import { useState } from "react";
-// import { useNavigate, Link } from "react-router-dom";
-// import "../styles/Auth.css";
-
-// const Signup = () => {
-//   const navigate = useNavigate();
-
-//   const [form, setForm] = useState({
-//     name: "",
-//     email: "",
-//     password: "",
-//     role: "",
-//   });
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     if (!form.name || !form.email || !form.password || !form.role) {
-//       alert("All fields are required");
-//       return;
-//     }
-
-//     console.log(form);
-//     navigate("/");
-//   };
-
-//   return (
-//     <div className="auth-wrapper">
-//       <div className="auth-box">
-//         <h2>Create Account</h2>
-
-//         <form onSubmit={handleSubmit}>
-//           <div className="form-group">
-//             <input
-//               type="text"
-//               placeholder="Full Name"
-//               onChange={(e) =>
-//                 setForm({ ...form, name: e.target.value })
-//               }
-//             />
-//           </div>
-
-//           <div className="form-group">
-//             <input
-//               type="email"
-//               placeholder="Email Address"
-//               onChange={(e) =>
-//                 setForm({ ...form, email: e.target.value })
-//               }
-//             />
-//           </div>
-
-//           <div className="form-group">
-//             <input
-//               type="password"
-//               placeholder="Password"
-//               onChange={(e) =>
-//                 setForm({ ...form, password: e.target.value })
-//               }
-//             />
-//           </div>
-
-//           {/* ROLE INPUT */}
-//           <div className="form-group">
-//             <label>Select Role</label>
-//             <select
-//               value={form.role}
-//               onChange={(e) =>
-//                 setForm({ ...form, role: e.target.value })
-//               }
-//             >
-//               <option value="">-- Choose Role --</option>
-//               <option value="student">Student</option>
-//               <option value="admin">Admin</option>
-//             </select>
-//           </div>
-
-//           <button className="primary-btn">Signup</button>
-//         </form>
-
-//         <div className="bottom-text">
-//           Already have account? <Link to="/">Login</Link>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Signup;
-
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "../styles/Auth.css";
+import "../styles/Signup.css";
+import signupIllustration from "../assets/signupIllustration.webp";
+import nitishLogo from "../assets/nitishLogo.png";
 
 const Signup = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    phone: "",
     password: "",
-    role: "",
+    confirmPassword: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.password || !form.role) {
+    if (
+      !form.firstName ||
+      !form.lastName ||
+      !form.email ||
+      !form.phone ||
+      !form.password ||
+      !form.confirmPassword
+    ) {
       alert("All fields are required");
       return;
     }
 
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
     try {
-      const res = await axios.post(
-        "http://localhost:5000/signup",
-        form
-      );
-
+      const res = await axios.post("http://localhost:5000/signup", {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        phone: form.phone,
+        password: form.password,
+      });
       alert(res.data.message);
-      navigate("/"); // go to login after signup
-
+      navigate("/");
     } catch (err) {
-      alert(
-        err.response?.data?.message ||
-        "Signup Failed ❌"
-      );
+      alert(err.response?.data?.message || "Signup Failed ❌");
     }
   };
 
   return (
-    <div className="auth-wrapper">
-      <div className="auth-box">
-        <h2>Create Account 🚀</h2>
+    <div className="pageWrapper">
+      <div className="mainContainer">
+        {/* LEFT SIDE */}
+        <div
+          className="imageSection"
+          style={{ backgroundImage: `url(${signupIllustration})` }}
+        ></div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Full Name"
-              required
-              onChange={(e) =>
-                setForm({ ...form, name: e.target.value })
-              }
-            />
-          </div>
+        {/* RIGHT SIDE */}
+        <div className="formSection">
+          <p className="registerHeading">Create your account</p>
+          <p className="subtitle">
+            Let’s get you all set up so you can access your personal account.
+          </p>
 
-          <div className="form-group">
-            <input
-              type="email"
-              placeholder="Email Address"
-              required
-              onChange={(e) =>
-                setForm({ ...form, email: e.target.value })
-              }
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="formGroup">
+                <label className="formLabel">First Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter first name"
+                  value={form.firstName}
+                  onChange={(e) =>
+                    setForm({ ...form, firstName: e.target.value })
+                  }
+                />
+              </div>
 
-          <div className="form-group">
-            <input
-              type="password"
-              placeholder="Password"
-              required
-              onChange={(e) =>
-                setForm({ ...form, password: e.target.value })
-              }
-            />
-          </div>
+              <div className="formGroup">
+                <label className="formLabel">Last Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter last name"
+                  value={form.lastName}
+                  onChange={(e) =>
+                    setForm({ ...form, lastName: e.target.value })
+                  }
+                />
+              </div>
+            </div>
 
-          <div className="form-group">
-            <select
-              required
-              value={form.role}
-              onChange={(e) =>
-                setForm({ ...form, role: e.target.value })
-              }
-            >
-              <option value="">Select Role</option>
-              <option value="student">Student</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+            <div className="row">
+              <div className="formGroup">
+                <label className="formLabel">Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
 
-          <button type="submit" className="primary-btn">
-            Signup
-          </button>
-        </form>
+              <div className="formGroup">
+                <label className="formLabel">Phone Number</label>
+                <input
+                  type="text"
+                  placeholder="Enter phone number"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                />
+              </div>
+            </div>
 
-        <div className="bottom-text">
-          Already have account?{" "}
-          <Link to="/">Login</Link>
+            <div className="formGroup">
+              <label className="formLabel">Password</label>
+              <input
+                type="password"
+                placeholder="Enter password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+              />
+            </div>
+
+            <div className="formGroup">
+              <label className="formLabel">Confirm Password</label>
+              <input
+                type="password"
+                placeholder="Confirm password"
+                value={form.confirmPassword}
+                onChange={(e) =>
+                  setForm({ ...form, confirmPassword: e.target.value })
+                }
+              />
+            </div>
+
+            <button type="submit" className="primaryBtn">
+              Create account
+            </button>
+          </form>
+
+          <p className="loginText">
+            Already have an account? <Link to="/">Login</Link>
+          </p>
         </div>
       </div>
     </div>
