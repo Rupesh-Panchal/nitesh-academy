@@ -24,7 +24,6 @@ app.post("/signup", (req, res) => {
   }
 
   const checkUserQuery = "SELECT * FROM users WHERE email = ?";
-
   db.query(checkUserQuery, [email], async (err, result) => {
     if (err) {
       console.log(err);
@@ -38,16 +37,13 @@ app.post("/signup", (req, res) => {
         message: "Email already exists",
       });
     }
-
     // HASH PASSWORD
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const insertQuery = `
       INSERT INTO users 
       (first_name, last_name, email, phone, password, role) 
       VALUES (?, ?, ?, ?, ?, ?)
     `;
-
     db.query(
       insertQuery,
       [firstName, lastName, email, phone, hashedPassword, "student"],
@@ -58,7 +54,6 @@ app.post("/signup", (req, res) => {
             message: "Signup failed",
           });
         }
-
         res.json({
           message: "Signup Successful ✅",
         });
@@ -105,8 +100,6 @@ app.post("/login", (req, res) => {
     });
   });
 });
-
-// =====================================
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
