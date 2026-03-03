@@ -3,13 +3,16 @@ const router = express.Router();
 const db = require("../config/db");
 
 router.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { firstName, lastName, email, phone, password } = req.body;
 
   try {
     await db.query(
-      "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-      [name, email, password, "admin"],
+      `INSERT INTO users 
+       (first_name, last_name, email, phone, password, role) 
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [firstName, lastName, email, phone, password, "admin"],
     );
+
     res.status(201).json({ message: "Admin Registered Successfully" });
   } catch (error) {
     console.log(error);
