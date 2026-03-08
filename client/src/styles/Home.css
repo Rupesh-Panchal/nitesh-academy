@@ -1,0 +1,33 @@
+body {
+  background: #f5f5f5;
+  color: #111;
+  transition: 0.3s ease;
+}
+
+body.dark {
+  background: #111;
+  color: #fff;
+}
+
+body.dark .navbar {
+  background: #1e1e1e;
+}
+
+body.dark .card {
+  background: #1e1e1e;
+  box-shadow: 0 5px 20px rgba(255,255,255,0.05);
+}
+
+body.dark .footer {
+  background: #000;
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

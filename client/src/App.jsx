@@ -40,6 +40,8 @@ import Signup from "./pages/Signup";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./pages/Home";
+
 
 function App() {
   return (
@@ -48,6 +50,8 @@ function App() {
       {/* Public Routes */}
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/home" element={<Home />} />
+      
 
       {/* Protected Admin Route */}
       <Route
