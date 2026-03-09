@@ -1,1 +1,7 @@
 bcrypt
+
+nodemon
+
+
+npm init -y
+npm install express mysql2 cors bcrypt jsonwebtoken dotenv multer nodemon
