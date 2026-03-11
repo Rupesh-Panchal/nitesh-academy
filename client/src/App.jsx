@@ -102,6 +102,7 @@ import StudentDashboard from "./pages/student/StudentDashboard";
 import ManageUsers from "./pages/admin/ManageUsers";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./pages/Home";
 
 function App() {
 
@@ -113,6 +114,7 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/a" element={<Admin />} />
+      <Route path="/home" element={<Home />} />
 
       {/* Admin Dashboard */}
       <Route
@@ -146,6 +148,7 @@ function App() {
 
       {/* 404 Redirect */}
       <Route path="*" element={<Navigate to="/" />} />
+      
 
     </Routes>
 
