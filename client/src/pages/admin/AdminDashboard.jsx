@@ -99,9 +99,14 @@
 
 // export default AdminDashboard;
 
+/////////////////////////////////
 
-import Sidebar from "../../components/Sidebar";
-import Topbar from "../../components/Topbar";
+
+
+
+import Sidebar from "./AdminSidebar";
+import Topbar from "./AdminNavbar";
+
 import "../../styles/AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -109,45 +114,60 @@ const AdminDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
+
     <div className="dashboardContainer">
 
+      {/* SIDEBAR */}
       <Sidebar role="admin" />
 
       <div className="dashboardMain">
 
+        {/* TOP NAVBAR */}
         <Topbar />
 
+        {/* WELCOME TEXT */}
         <h2 className="welcomeText">
-          Welcome, {user?.first_name} 👑
+          Welcome, {user?.first_name || "Admin"} 👑
         </h2>
 
+        {/* STATS */}
         <div className="statsGrid">
 
-          <div className="statCard">
+          <div className="statCard usersCard">
             <h3>Total Users</h3>
             <p>120</p>
           </div>
 
-          <div className="statCard">
+          <div className="statCard coursesCard">
             <h3>Total Courses</h3>
             <p>8</p>
           </div>
 
-          <div className="statCard">
+          <div className="statCard enrollCard">
             <h3>Enrollments</h3>
             <p>320</p>
           </div>
 
-          <div className="statCard">
+          <div className="statCard revenueCard">
             <h3>Revenue</h3>
             <p>₹45,000</p>
           </div>
 
         </div>
 
+        {/* RECENT USERS TABLE */}
+
         <div className="tableSection">
 
-          <h2>Recent Users</h2>
+          <div className="tableHeader">
+
+            <h2>Recent Users</h2>
+
+            <button className="viewAllBtn">
+              View All
+            </button>
+
+          </div>
 
           <table>
 
@@ -161,12 +181,14 @@ const AdminDashboard = () => {
             </thead>
 
             <tbody>
+
               <tr>
                 <td>1</td>
                 <td>Vivek Gupta</td>
                 <td>vivek@email.com</td>
                 <td>9876543210</td>
               </tr>
+
             </tbody>
 
           </table>
@@ -176,7 +198,9 @@ const AdminDashboard = () => {
       </div>
 
     </div>
+
   );
+
 };
 
 export default AdminDashboard;
