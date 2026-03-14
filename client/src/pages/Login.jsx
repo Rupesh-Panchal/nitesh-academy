@@ -1,9 +1,204 @@
+// // import { useState } from "react";
+// // import { Link, useNavigate } from "react-router-dom";
+// // import axios from "axios";
+// // import "../styles/Auth.css";
+
+// // const Login = () => {
+// //   const navigate = useNavigate();
+
+// //   const [form, setForm] = useState({
+// //     email: "",
+// //     password: "",
+// //   });
+
+// //   const handleSubmit = async (e) => {
+// //     e.preventDefault();
+
+// //     try {
+// //       const res = await axios.post(
+// //         "http://localhost:5000/login",
+// //         form
+// //       );
+
+// //       const role = res.data.role;
+
+// //       if (role === "admin") {
+// //         navigate("/admin-dashboard");
+// //       } else if (role === "student") {
+// //         navigate("/student-dashboard");
+// //       } else {
+// //         alert("Unknown role");
+// //       }
+
+// //     } catch (err) {
+// //       alert("Invalid Credentials ❌");
+// //     }
+// //   };
+
+// //   return (
+// //     <div className="auth-wrapper">
+// //       <div className="auth-box">
+
+// //         <div className="auth-content">
+// //           <h2>Welcome Back 👋</h2>
+// //           <p>Please login to your account</p>
+
+// //           <form onSubmit={handleSubmit}>
+// //             <div className="form-group">
+// //               <input
+// //                 type="email"
+// //                 placeholder="Email Address"
+// //                 required
+// //                 onChange={(e) =>
+// //                   setForm({ ...form, email: e.target.value })
+// //                 }
+// //               />
+// //             </div>
+
+// //             <div className="form-group">
+// //               <input
+// //                 type="password"
+// //                 placeholder="Password"
+// //                 required
+// //                 onChange={(e) =>
+// //                   setForm({ ...form, password: e.target.value })
+// //                 }
+// //               />
+// //             </div>
+
+// //             <button type="submit" className="primary-btn">
+// //               Login
+// //             </button>
+// //           </form>
+
+// //           <div className="bottom-text">
+// //             Don’t have an account?{" "}
+// //             <Link to="/signup">Signup</Link>
+// //           </div>
+// //         </div>
+
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default Login;
+
+
+
+
+// // import { useState } from "react";
+// // import { Link, useNavigate } from "react-router-dom";
+// // import axios from "axios";
+// // import "../styles/Auth.css";
+
+// // const Login = () => {
+// //   const navigate = useNavigate();
+
+// //   const [form, setForm] = useState({
+// //     email: "",
+// //     password: "",
+// //   });
+
+// //   const handleSubmit = async (e) => {
+// //     e.preventDefault();
+
+// //     try {
+// //       const res = await axios.post(
+// //         "http://localhost:5000/login",
+// //         form
+// //       );
+
+// //       console.log("Login Response:", res.data);
+
+// //       // 🔥 Save user to localStorage
+// //       localStorage.setItem(
+// //         "user",
+// //         JSON.stringify({
+// //           id: res.data.user.id,
+// //           name: res.data.user.name,
+// //           email: res.data.user.email,
+// //           role: res.data.role,
+// //         })
+// //       );
+
+// //       // 🔥 Role-based redirect
+// //       if (res.data.role === "admin") {
+// //         navigate("/admin-dashboard");
+// //       } else if (res.data.role === "student") {
+// //         navigate("/student-dashboard");
+// //       } else {
+// //         alert("Unknown role");
+// //       }
+
+// //     } catch (err) {
+// //       alert(
+// //         err.response?.data?.message ||
+// //         "Invalid Credentials ❌"
+// //       );
+// //     }
+// //   };
+
+// //   return (
+// //     <div className="auth-wrapper">
+// //       <div className="auth-box">
+
+// //         <div className="auth-content">
+// //           <h2>Welcome Back 👋</h2>
+// //           <p>Please login to your account</p>
+
+// //           <form onSubmit={handleSubmit}>
+// //             <div className="form-group">
+// //               <input
+// //                 type="email"
+// //                 placeholder="Email Address"
+// //                 required
+// //                 onChange={(e) =>
+// //                   setForm({ ...form, email: e.target.value })
+// //                 }
+// //               />
+// //             </div>
+
+// //             <div className="form-group">
+// //               <input
+// //                 type="password"
+// //                 placeholder="Password"
+// //                 required
+// //                 onChange={(e) =>
+// //                   setForm({ ...form, password: e.target.value })
+// //                 }
+// //               />
+// //             </div>
+
+// //             <button type="submit" className="primary-btn">
+// //               Login
+// //             </button>
+// //           </form>
+
+// //           <div className="bottom-text">
+// //             Don’t have an account?{" "}
+// //             <Link to="/signup">Signup</Link>
+// //           </div>
+// //         </div>
+
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default Login;
+
+
+
+
 // import { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
+// import { useNavigate, Link } from "react-router-dom";
 // import axios from "axios";
-// import "../styles/Auth.css";
+// import "../styles/Signup.css";
+// import login from "../assets/login.png";
 
 // const Login = () => {
+
 //   const navigate = useNavigate();
 
 //   const [form, setForm] = useState({
@@ -14,69 +209,96 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
+//     if (!form.email || !form.password) {
+//       alert("All fields are required");
+//       return;
+//     }
+
 //     try {
-//       const res = await axios.post(
-//         "http://localhost:5000/login",
-//         form
-//       );
 
-//       const role = res.data.role;
+//       const res = await axios.post("http://localhost:5000/login", {
+//         email: form.email,
+//         password: form.password,
+//       });
 
-//       if (role === "admin") {
-//         navigate("/admin-dashboard");
-//       } else if (role === "student") {
-//         navigate("/student-dashboard");
-//       } else {
-//         alert("Unknown role");
+//       alert(res.data.message);
+
+//       // allow only admin
+//       if (res.data.role !== "admin") {
+//         alert("Access denied. Only admin allowed.");
+//         return;
 //       }
 
+//       // save token
+//       if (res.data.token) {
+//         localStorage.setItem("token", res.data.token);
+//       }
+
+//       // redirect to admin dashboard
+//       navigate("/nitish.academy/admin/dashboard");
+
 //     } catch (err) {
-//       alert("Invalid Credentials ❌");
+//       alert(err.response?.data?.message || "Login Failed ❌");
 //     }
 //   };
 
 //   return (
-//     <div className="auth-wrapper">
-//       <div className="auth-box">
+//     <div className="pageWrapper">
+//       <div className="mainContainer">
 
-//         <div className="auth-content">
-//           <h2>Welcome Back 👋</h2>
-//           <p>Please login to your account</p>
+//         {/* LEFT IMAGE */}
+//         <div
+//           className="imageSection"
+//           style={{ backgroundImage: `url(${login})` }}
+//         ></div>
+
+//         {/* RIGHT FORM */}
+//         <div className="formSection">
+
+//           <p className="registerHeading">Login to your account</p>
+
+//           <p className="subtitle">
+//             Welcome back! Please enter your credentials.
+//           </p>
 
 //           <form onSubmit={handleSubmit}>
-//             <div className="form-group">
+
+//             <div className="formGroup">
+//               <label className="formLabel">Email</label>
 //               <input
 //                 type="email"
-//                 placeholder="Email Address"
-//                 required
+//                 placeholder="Enter your email"
+//                 value={form.email}
 //                 onChange={(e) =>
 //                   setForm({ ...form, email: e.target.value })
 //                 }
 //               />
 //             </div>
 
-//             <div className="form-group">
+//             <div className="formGroup">
+//               <label className="formLabel">Password</label>
 //               <input
 //                 type="password"
-//                 placeholder="Password"
-//                 required
+//                 placeholder="Enter password"
+//                 value={form.password}
 //                 onChange={(e) =>
 //                   setForm({ ...form, password: e.target.value })
 //                 }
 //               />
 //             </div>
 
-//             <button type="submit" className="primary-btn">
+//             <button type="submit" className="primaryBtn">
 //               Login
 //             </button>
+
 //           </form>
 
-//           <div className="bottom-text">
+//           <p className="loginText">
 //             Don’t have an account?{" "}
-//             <Link to="/signup">Signup</Link>
-//           </div>
-//         </div>
+//             <Link to="/nitish.academy/admin/signup">Register</Link>
+//           </p>
 
+//         </div>
 //       </div>
 //     </div>
 //   );
@@ -87,12 +309,137 @@
 
 
 
-// import { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
+// import { useState, useEffect } from "react";
+// import { useNavigate, Link } from "react-router-dom";
 // import axios from "axios";
-// import "../styles/Auth.css";
+// import "../styles/Signup.css";
+// import login from "../assets/login.png";
 
 // const Login = () => {
+
+//   const navigate = useNavigate();
+
+//   // 🔐 Prevent opening login if already logged in
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+
+//     if (token) {
+//       navigate("/nitish.academy/admin/dashboard");
+//     }
+//   }, []);
+
+//   const [form, setForm] = useState({
+//     email: "",
+//     password: "",
+//   });
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!form.email || !form.password) {
+//       alert("All fields are required");
+//       return;
+//     }
+
+//     try {
+
+//       const res = await axios.post("http://localhost:5000/login", {
+//         email: form.email,
+//         password: form.password,
+//       });
+
+//       alert(res.data.message);
+
+//       if (res.data.role !== "admin") {
+//         alert("Access denied. Only admin allowed.");
+//         return;
+//       }
+
+//       if (res.data.token) {
+//         localStorage.setItem("token", res.data.token);
+//       }
+
+//       navigate("/nitish.academy/admin/dashboard");
+
+//     } catch (err) {
+//       alert(err.response?.data?.message || "Login Failed ❌");
+//     }
+//   };
+
+//   return (
+//     <div className="pageWrapper">
+//       <div className="mainContainer">
+
+//         <div
+//           className="imageSection"
+//           style={{ backgroundImage: `url(${login})` }}
+//         ></div>
+
+//         <div className="formSection">
+
+//           <p className="registerHeading">Login to your account</p>
+
+//           <p className="subtitle">
+//             Welcome back! Please enter your credentials.
+//           </p>
+
+//           <form onSubmit={handleSubmit}>
+
+//             <div className="formGroup">
+//               <label className="formLabel">Email</label>
+//               <input
+//                 type="email"
+//                 placeholder="Enter your email"
+//                 value={form.email}
+//                 onChange={(e) =>
+//                   setForm({ ...form, email: e.target.value })
+//                 }
+//               />
+//             </div>
+
+//             <div className="formGroup">
+//               <label className="formLabel">Password</label>
+//               <input
+//                 type="password"
+//                 placeholder="Enter password"
+//                 value={form.password}
+//                 onChange={(e) =>
+//                   setForm({ ...form, password: e.target.value })
+//                 }
+//               />
+//             </div>
+
+//             <button type="submit" className="primaryBtn">
+//               Login
+//             </button>
+
+//           </form>
+
+//           <p className="loginText">
+//             Don’t have an account?{" "}
+//             <Link to="/nitish.academy/admin/signup">Register</Link>
+//           </p>
+
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
+
+
+
+// import { useState } from "react";
+// import { useNavigate, Link } from "react-router-dom";
+// import axios from "axios";
+// import "../styles/Signup.css";
+// import login from "../assets/login.png";
+
+// const Login = () => {
+
 //   const navigate = useNavigate();
 
 //   const [form, setForm] = useState({
@@ -103,91 +450,101 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
+//     if (!form.email || !form.password) {
+//       alert("All fields are required");
+//       return;
+//     }
+
 //     try {
-//       const res = await axios.post(
-//         "http://localhost:5000/login",
-//         form
-//       );
 
-//       console.log("Login Response:", res.data);
+//       const res = await axios.post("http://localhost:5000/login", {
+//         email: form.email,
+//         password: form.password,
+//       });
 
-//       // 🔥 Save user to localStorage
-//       localStorage.setItem(
-//         "user",
-//         JSON.stringify({
-//           id: res.data.user.id,
-//           name: res.data.user.name,
-//           email: res.data.user.email,
-//           role: res.data.role,
-//         })
-//       );
+//       alert(res.data.message);
 
-//       // 🔥 Role-based redirect
-//       if (res.data.role === "admin") {
-//         navigate("/admin-dashboard");
-//       } else if (res.data.role === "student") {
-//         navigate("/student-dashboard");
-//       } else {
-//         alert("Unknown role");
+//       if (res.data.role !== "admin") {
+//         alert("Access denied. Only admin allowed.");
+//         return;
 //       }
 
+//       // remove old token
+//       localStorage.removeItem("token");
+
+//       // store new token
+//       if (res.data.token) {
+//         localStorage.setItem("token", res.data.token);
+//       }
+
+//       navigate("/nitish.academy/admin/dashboard");
+
 //     } catch (err) {
-//       alert(
-//         err.response?.data?.message ||
-//         "Invalid Credentials ❌"
-//       );
+//       alert(err.response?.data?.message || "Login Failed ❌");
 //     }
 //   };
 
 //   return (
-//     <div className="auth-wrapper">
-//       <div className="auth-box">
+//     <div className="pageWrapper">
+//       <div className="mainContainer">
 
-//         <div className="auth-content">
-//           <h2>Welcome Back 👋</h2>
-//           <p>Please login to your account</p>
+//         <div
+//           className="imageSection"
+//           style={{ backgroundImage: `url(${login})` }}
+//         ></div>
+
+//         <div className="formSection">
+
+//           <p className="registerHeading">Login to your account</p>
+
+//           <p className="subtitle">
+//             Welcome back! Please enter your credentials.
+//           </p>
 
 //           <form onSubmit={handleSubmit}>
-//             <div className="form-group">
+
+//             <div className="formGroup">
+//               <label className="formLabel">Email</label>
 //               <input
 //                 type="email"
-//                 placeholder="Email Address"
-//                 required
+//                 placeholder="Enter your email"
+//                 value={form.email}
 //                 onChange={(e) =>
 //                   setForm({ ...form, email: e.target.value })
 //                 }
 //               />
 //             </div>
 
-//             <div className="form-group">
+//             <div className="formGroup">
+//               <label className="formLabel">Password</label>
 //               <input
 //                 type="password"
-//                 placeholder="Password"
-//                 required
+//                 placeholder="Enter password"
+//                 value={form.password}
 //                 onChange={(e) =>
 //                   setForm({ ...form, password: e.target.value })
 //                 }
 //               />
 //             </div>
 
-//             <button type="submit" className="primary-btn">
+//             <button type="submit" className="primaryBtn">
 //               Login
 //             </button>
+
 //           </form>
 
-//           <div className="bottom-text">
+//           <p className="loginText">
 //             Don’t have an account?{" "}
-//             <Link to="/signup">Signup</Link>
-//           </div>
-//         </div>
+//             <Link to="/nitish.academy/admin/signup">Register</Link>
+//           </p>
 
+//         </div>
 //       </div>
 //     </div>
 //   );
 // };
 
 // export default Login;
-
 
 
 
@@ -195,14 +552,15 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signup.css";
-import signupIllustration from "../assets/signupIllustration.webp";
+import login from "../assets/login.png";
 
 const Login = () => {
+
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
-    password: "",
+    password: "", 
   });
 
   const handleSubmit = async (e) => {
@@ -214,21 +572,27 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/login", {
+
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
         email: form.email,
         password: form.password,
       });
 
+      console.log(res.data);
+
       alert(res.data.message);
 
-      // save token if backend sends it
-      if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
+      if (res.data.role !== "admin") {
+        alert("Access denied. Only admin allowed.");
+        return;
       }
 
-      navigate("/home");
+      localStorage.setItem("token", res.data.token);
+
+      navigate("/nitish.academy/admin/dashboard");
 
     } catch (err) {
+      console.error(err);
       alert(err.response?.data?.message || "Login Failed ❌");
     }
   };
@@ -237,13 +601,11 @@ const Login = () => {
     <div className="pageWrapper">
       <div className="mainContainer">
 
-        {/* LEFT IMAGE */}
         <div
           className="imageSection"
-          style={{ backgroundImage: `url(${signupIllustration})` }}
+          style={{ backgroundImage: `url(${login})` }}
         ></div>
 
-        {/* RIGHT FORM */}
         <div className="formSection">
 
           <p className="registerHeading">Login to your account</p>
@@ -285,7 +647,8 @@ const Login = () => {
           </form>
 
           <p className="loginText">
-            Don’t have an account? <Link to="/signup">Register</Link>
+            Don’t have an account?{" "}
+            <Link to="/nitish.academy/admin/signup">Register</Link>
           </p>
 
         </div>

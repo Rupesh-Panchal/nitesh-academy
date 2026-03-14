@@ -161,7 +161,6 @@
 
 // export default App;
 
-
 import { Routes, Route, Navigate } from "react-router-dom";
 
 /* AUTH */
@@ -181,36 +180,26 @@ import ManageFeatures from "./pages/admin/ManageFeatures";
 /* PROTECTED ROUTE */
 import ProtectedRoute from "./components/ProtectedRoute";
 
-
 function App() {
-
   return (
-
     <Routes>
 
       {/* PUBLIC ROUTES */}
 
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Navigate to="/nitish.academy" />} />
 
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/nitish.academy" element={<Home />} />
 
-      <Route path="/home" element={<Home />} />
+      <Route path="/nitish.academy/admin/login" element={<Login />} />
 
-      <Route path="/admin" element={<AdminDashboard />} />
-
-      <Route path="/admin/add-achiever" element={<AddAchiever />} />
-      <Route path="/admin/manage-achievers" element={<ManageAchievers />} />
-      <Route path="/admin/add-feature" element={<AddFeature />} />
-      <Route path="/admin/manage-features" element={<ManageFeatures />}
-/>
-      
+      <Route path="/nitish.academy/admin/signup" element={<Signup />} />
 
 
 
-      {/* ADMIN ROUTES */}
+      {/* PROTECTED ADMIN ROUTES */}
 
       <Route
-        path="/admin-dashboard"
+        path="/nitish.academy/admin/dashboard"
         element={
           <ProtectedRoute roleRequired="admin">
             <AdminDashboard />
@@ -219,7 +208,16 @@ function App() {
       />
 
       <Route
-        path="/admin/manage-achievers"
+        path="/nitish.academy/admin/add-achiever"
+        element={
+          <ProtectedRoute roleRequired="admin">
+            <AddAchiever />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/nitish.academy/admin/manage-achievers"
         element={
           <ProtectedRoute roleRequired="admin">
             <ManageAchievers />
@@ -228,10 +226,19 @@ function App() {
       />
 
       <Route
-        path="/admin/add-achiever"
+        path="/nitish.academy/admin/add-feature"
         element={
           <ProtectedRoute roleRequired="admin">
-            <AddAchiever />
+            <AddFeature />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/nitish.academy/admin/manage-features"
+        element={
+          <ProtectedRoute roleRequired="admin">
+            <ManageFeatures />
           </ProtectedRoute>
         }
       />
@@ -239,12 +246,10 @@ function App() {
 
       {/* 404 */}
 
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="*" element={<Navigate to="/nitish.academy" />} />
 
     </Routes>
-
   );
-
 }
 
 export default App;
