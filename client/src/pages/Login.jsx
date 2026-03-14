@@ -285,7 +285,7 @@ const Login = () => {
           </form>
 
           <p className="loginText">
-            Don’t have an account? <Link to="/signup">Register</Link>
+            Don’t have an account? <Link to="/nitish.academy/admin/signup">Register</Link>
           </p>
 
         </div>
