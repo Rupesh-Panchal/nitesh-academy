@@ -195,7 +195,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signup.css";
-import signupIllustration from "../assets/signupIllustration.webp";
+import login from "../assets/login.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -240,7 +240,7 @@ const Login = () => {
         {/* LEFT IMAGE */}
         <div
           className="imageSection"
-          style={{ backgroundImage: `url(${signupIllustration})` }}
+          style={{ backgroundImage: `url(${login})` }}
         ></div>
 
         {/* RIGHT FORM */}
