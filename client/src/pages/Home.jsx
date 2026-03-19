@@ -6,18 +6,14 @@ import WhyChoose from "../components/WhyChoose";
 import "../styles/Home.css";
 
 const Home = () => {
-
-  return (
-    <div>
-
-      <Navbar />
-      <Hero/>
-      <Achievers/>
-      <WhyChoose/>
-      <Footer />
-
-    </div>
-  );
+    return (
+        <div>
+            <Navbar />
+            <Hero/>
+            <Achievers/>
+            <WhyChoose/>
+            <Footer />
+        </div>
+    );
 };
-
 export default Home;

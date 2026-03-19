@@ -1,0 +1,60 @@
+.pageLayout {
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+.pageBody {
+    display: flex;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 30px;
+    margin-left: 240px; /* sidebar width */
+}
+
+.heading {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* FORM */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 450px;
+}
+
+.form input,
+.form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.form textarea {
+    min-height: 100px;
+    resize: none;
+}
+
+.form input:focus,
+.form textarea:focus {
+    outline: none;
+    border-color: #235EBE;
+}
+
+.form button {
+    padding: 10px;
+    background: #235EBE;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.form button:hover {
+    background: #1d4ed8;
+}

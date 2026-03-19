@@ -1,0 +1,118 @@
+.pageLayout {
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+.pageBody {
+    display: flex;
+}
+
+.mainContent {
+    flex: 1;
+    margin-left: 240px;
+    padding: 30px;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.addBtn {
+    background: #235EBE;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* TABLE */
+.tableContainer {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    padding: 12px;
+}
+
+.img {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+}
+
+/* BUTTONS */
+.editBtn {
+    margin-right: 10px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
+
+.deleteBtn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
+
+/* FORM */
+.formContainer {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: auto;   
+    width: 100%;   
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formActions {
+    display: flex;
+    gap: 10px;
+}
+
+.saveBtn {
+    background: green;
+    color: white;
+    padding: 8px 12px;
+}
+
+.cancelBtn {
+    background: gray;
+    color: white;
+    padding: 8px 12px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.formGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.formGroup label {
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}

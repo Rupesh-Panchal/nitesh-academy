@@ -1,145 +1,40 @@
-// import db from "../db.js";
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-
-
-// // SIGNUP
-// export const signup = async (req, res) => {
-
-//   const { firstName, lastName, email, phone, password } = req.body;
-
-//   if (!firstName || !lastName || !email || !phone || !password) {
-//     return res.status(400).json({ message: "All fields required" });
-//   }
-
-//   try {
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     const sql = `
-//       INSERT INTO users (first_name, last_name, email, phone, password)
-//       VALUES (?, ?, ?, ?, ?)
-//     `;
-
-//     db.query(sql,
-//       [firstName, lastName, email, phone, hashedPassword],
-//       (err, result) => {
-
-//         if (err) {
-//           return res.status(500).json({ message: "User already exists" });
-//         }
-
-//         res.json({ message: "Signup successful ✅" });
-
-//       });
-
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error" });
-//   }
-
-// };
-
-
-// // LOGIN
-// export const login = (req, res) => {
-
-//   const { email, password } = req.body;
-
-//   const sql = "SELECT * FROM users WHERE email = ?";
-
-//   db.query(sql, [email], async (err, result) => {
-
-//     if (err) {
-//       return res.status(500).json({ message: "Server error" });
-//     }
-
-//     if (result.length === 0) {
-//       return res.status(400).json({ message: "User not found" });
-//     }
-
-//     const user = result[0];
-
-//     const match = await bcrypt.compare(password, user.password);
-
-//     if (!match) {
-//       return res.status(400).json({ message: "Wrong password" });
-//     }
-
-//     const token = jwt.sign(
-//       { id: user.id },
-//       "secretkey",
-//       { expiresIn: "1d" }
-//     );
-
-//     res.json({
-//       message: "Login successful",
-//       token
-//     });
-
-//   });
-
-// };
-
-
-
 import db from "../config/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const signup = async (req,res)=>{
-
-const {firstName,lastName,email,phone,password} = req.body;
-
-const hashedPassword = await bcrypt.hash(password,10);
-
-const sql = `
-INSERT INTO users(first_name,last_name,email,phone,password,role)
-VALUES(?,?,?,?,?,'student')
-`;
-
-db.query(sql,[firstName,lastName,email,phone,hashedPassword],(err)=>{
-
-if(err){
-return res.status(500).json({message:"Signup failed"});
-}
-
-res.json({message:"Signup success"});
-
-});
-
+	try {
+		const {firstName,lastName,email,phone,password} = req.body;
+		const hashedPassword = await bcrypt.hash(password,10);
+		const sql = `INSERT INTO users(first_name, last_name, email, phone, password, role) VALUES(?,?,?,?,?,'admin')`;
+		const result = await db.query(sql,[firstName, lastName, email, phone, hashedPassword]);
+		const token = jwt.sign({ id: result[0].insertId, role: "admin" }, "secretkey", { expiresIn: "1d" });
+		res.json({message: "Signup success", token, role: "admin",});
+	} catch (err) {
+		console.log("Signup Error:", err);
+		if (err.code === "ER_DUP_ENTRY") {
+			return res.status(400).json({ message: "Email already exists ❌" });
+		}
+		res.status(500).json({message:"Signup failed"});
+	}
 };
 
-
-export const login = (req,res)=>{
-
-const {email,password} = req.body;
-
-db.query("SELECT * FROM users WHERE email=?",[email],
-async (err,result)=>{
-
-if(result.length === 0){
-return res.status(400).json({message:"User not found"});
-}
-
-const user = result[0];
-
-const match = await bcrypt.compare(password,user.password);
-
-if(!match){
-return res.status(400).json({message:"Wrong password"});
-}
-
-const token = jwt.sign(
-{id:user.id,role:user.role},
-"secretkey",
-{expiresIn:"1d"}
-);
-
-res.json({
-token,
-user
-});
-
-});
-
+export const login = async (req, res) => {
+	try {
+    	const { email, password } = req.body;
+	    const result = await db.query("SELECT * FROM users WHERE email=?", [email]);
+	    const user = result[0][0];
+	    if (!user) {
+			return res.status(400).json({ message: "User not found" });
+		}
+    	const match = await bcrypt.compare(password, user.password);
+	    if (!match) {
+			return res.status(400).json({ message: "Wrong password" });
+		}
+	    const token = jwt.sign({ id: user.id, role: user.role }, "secretkey", { expiresIn: "1d" });
+	    res.json({message: "Login successful", token, role: user.role,});
+    } catch (err) {
+	    console.log("Login Error:", err);
+	    res.status(500).json({ message: "Login failed" });
+  }
 };
