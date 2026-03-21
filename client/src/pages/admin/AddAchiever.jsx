@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import {getAchieversAPI, addAchieverAPI, editAchieverAPI, deleteAchieverAPI} from "../../api/api";
 import Sidebar from "../../components/admin/Sidebar";
 import AdminNavbar from "../../components/admin/Navbar";
 import styles from "./AddAchiever.module.css";
@@ -12,7 +12,7 @@ const Achievers = () => {
     const [form, setForm] = useState(EMPTY_FORM);
 
     const loadAchievers = async () => {
-        const res = await axios.get("http://localhost:5000/api/achievers");
+        const res = await getAchieversAPI();
         setAchievers(res.data);
     };
 
@@ -30,13 +30,22 @@ const Achievers = () => {
 
     const handleSave = async () => {
         const data = new FormData();
-        Object.keys(form).forEach((key) => {
-            if (form[key]) data.append(key, form[key]);
-        });
+        if (editMode) {
+            data.append("id", form.id);
+        }
+        data.append("name", form.name);
+        data.append("score", form.score);
+        data.append("board", form.board);
+        data.append("section", form.section);
+        data.append("rank_text", form.rank_text);
+        if (form.image) {
+            data.append("image", form.image);
+        }
         try {
-            if (editMode) {await axios.put(`http://localhost:5000/api/achievers/update/${form.id}`, data);
+            if (editMode) {
+                await editAchieverAPI(data);
             } else {
-                await axios.post("http://localhost:5000/api/achievers/add", data);
+                await addAchieverAPI(data);
             }
             setShowForm(false);
             setEditMode(false);
@@ -55,10 +64,12 @@ const Achievers = () => {
 
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this achiever?")) return;
-        await axios.delete(`http://localhost:5000/api/achievers/delete/${id}`);
+        await deleteAchieverAPI(id);
         loadAchievers();
     };
-
+    
+    const isFormValid = form.name.trim() && form.score.trim() && form.board.trim() && form.section.trim() && form.rank_text.trim() && (!editMode ? form.image : true);
+    
     return (
         <div className={styles.pageLayout}>
             <AdminNavbar />
@@ -68,7 +79,7 @@ const Achievers = () => {
                     <div className={styles.header}>
                         <h2>Achievers</h2>
                         {!showForm && (
-                            <button onClick={() => {setShowForm(true); setEditMode(false);}} className={styles.addBtn}>+ Add Achiever</button>
+                            <button onClick={() => {setShowForm(true); setEditMode(false); setForm(EMPTY_FORM);}} className={styles.addBtn}>+ Add Achiever</button>
                         )}
                     </div>
                     {/* TABLE */}
@@ -82,7 +93,6 @@ const Achievers = () => {
                                         <th>Board</th>
                                         <th>Section</th>
                                         <th>Rank</th>
-                                        <th>Image</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -94,7 +104,6 @@ const Achievers = () => {
                                             <td>{item.board}</td>
                                             <td>{item.section}</td>
                                             <td>{item.rank_text}</td>
-                                            <td><img src={item.image} className={styles.img} alt=""/></td>
                                             <td>
                                                 <button onClick={() => handleEdit(item)} className={styles.editBtn}>Edit</button>
                                                 <button onClick={() => handleDelete(item.id)} className={styles.deleteBtn}>Delete</button>
@@ -142,7 +151,7 @@ const Achievers = () => {
                                     </div>
                                 </div>
                                 <div className={styles.formActions}>
-                                    <button onClick={handleSave} className={styles.saveBtn}>Save</button>
+                                    <button onClick={handleSave} className={styles.saveBtn} disabled={!isFormValid}>Save</button>
                                     <button onClick={() => setShowForm(false)} className={styles.cancelBtn}>Cancel</button>
                                 </div>
                             </div>
