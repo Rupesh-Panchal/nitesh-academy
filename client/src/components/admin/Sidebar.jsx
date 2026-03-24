@@ -7,10 +7,8 @@ const AdminSidebar = () => {
             <h2 className={styles.logo}>Admin Menu</h2>
             <nav>
                 <Link to="/admin/dashboard">Dashboard</Link>
-                <Link to="/admin/add-achiever">Add Achiever</Link>
-                <Link to="/admin/manage-achievers">Manage Achievers</Link>
-                <Link to="/admin/manage-features">Manage Features</Link>
-                {/*<Link to="/">Back To Website</Link>*/}
+                <Link to="/admin/add-achiever">Achievers</Link>
+                <Link to="/admin/features">Features</Link>
             </nav>
         </div>
     );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {getAchieversAPI, addAchieverAPI, editAchieverAPI, deleteAchieverAPI} from "../../api/api";
 import Sidebar from "../../components/admin/Sidebar";
 import AdminNavbar from "../../components/admin/Navbar";
-import styles from "./AddAchiever.module.css";
+import styles from "./Achiever.module.css";
 
 const EMPTY_FORM = {id: null, name: "", score: "", board: "", section: "", rank_text: "", image: null,};
 const Achievers = () => {

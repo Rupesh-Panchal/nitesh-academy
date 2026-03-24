@@ -1,7 +1,7 @@
 import Sidebar from "../../components/admin/Sidebar";
 import AdminNavbar from "../../components/admin/Navbar";
 import AdminFooter from "../../components/admin/Footer";
-import styles from "./AdminDashboard.module.css";
+import styles from "./Dashboard.module.css";
 
 const AdminDashboard = () => {
     const user = JSON.parse(localStorage.getItem("user"));
