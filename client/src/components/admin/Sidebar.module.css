@@ -1,15 +1,15 @@
 .adminSidebar {
     width: 240px;
     height: 100vh;
-    background: #f8fafc;             
-    border-right: 1px solid #e5e7eb; 
+    background: #ffffff;                 /* clean white */
+    border-right: 1px solid #e5e7eb;
     padding: 20px;
     position: fixed;
     box-sizing: border-box;
 }
 
 .logo {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     font-size: 20px;
     font-weight: 600;
     color: #111827;   /* dark text */
@@ -21,16 +21,22 @@
 }
 
 .adminSidebar a {
-    color: #374151;
+    color: #2563EB;
     text-decoration: none;
     padding: 12px 15px;
     border-bottom: 1px solid #235EBE;
     transition: 0.2s;
     font-size: 18px;     
-    font-weight: 500;    
+    font-weight: 600;    
 }
 
 .adminSidebar a:hover {
+    background: #eef2ff;
+    color: #1e3a8a;
+    border-left: 3px solid #1e3a8a;
+}
+
+.active {
     background: #eef2ff;
     color: #1e3a8a;
     border-left: 3px solid #1e3a8a;

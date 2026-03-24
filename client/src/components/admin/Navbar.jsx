@@ -11,7 +11,7 @@ const AdminNavbar = () => {
         <div className={styles.navbar}>
             <div className={styles.left}>
                 <img src={nitishLogo} alt="logo" className={styles.logo} />
-                <span className={styles.title}>Nitish Academy</span>
+                <span className={styles.title}>NITISH ACADEMY</span>
             </div>
             <div className={styles.right}>
                 <span className={styles.welcome}>Welcome, {user?.first_name || "Admin"}</span>
